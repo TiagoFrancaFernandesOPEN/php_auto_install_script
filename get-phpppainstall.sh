@@ -255,6 +255,15 @@ do_install() {
 			pkgs_after_ppa_add="libjpeg62-turbo libcurl3 php7.3-common php7.3-fpm php7.3-cli php7.3-soap php7.3-mysql php7.3-xml php7.3-zip php7.3-bcmath php7.3-curl php7.3-json php7.3-gd php7.3-mbstring php7.3-intl php7.3-opcache php7.3-sqlite php7.3-pdo libmcrypt-dev php7.3-dev php7.3-readline php7.3-xmlrpc php7.3-pgsql php7.3-imagick libmagickwand-dev imagemagick php-pear php7.3-dev php7.3-mongo php-pear"
 
 			$sh_c "apt-get install -y -qq --no-install-recommends $pkgs_after_ppa_add >/dev/null"
+
+			$sh_c "php -r \"echo PHP_EOL.'------------------------------------------------------------'.PHP_EOL;\""
+			$sh_c "php -r \"echo 'Installing the composer:'.PHP_EOL;\""
+			$sh_c "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\""
+			$sh_c "php composer-setup.php"
+			$sh_c "chmod +x composer.phar"
+			$sh_c "cp composer.phar /usr/bin/composer.phar"
+			$sh_c "php -r \"echo PHP_EOL.'------------------------------------------------------------'.PHP_EOL;\""
+			$sh_c "php -r \"unlink('composer-setup.php');\""
 			$sh_c "pecl install mongodb >/dev/null"
 			echo_install_as_nonroot
 			exit 0
